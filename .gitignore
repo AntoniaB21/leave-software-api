@@ -12,3 +12,6 @@
 
 ###< symfony/framework-bundle ###
 node_modules
+
+### PEM File ###
+ec2-keys-leave-soft.pem
