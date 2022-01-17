@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "buffer": "^4.9.2",
-    "expo-cli": "^5.0.1",
+    "expo-cli": "^5.0.3",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
     "react-native-elements": "^3.4.2",
     "react-native-event-source": "^1.1.0",
