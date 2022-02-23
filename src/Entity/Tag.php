@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,6 +33,7 @@ class Tag
     private $slug;
 
     /**
+     * @ApiSubresource()
      * @ORM\OneToMany(targetEntity=TagChildren::class, mappedBy="tag")
      */
     private $tagChildrens;

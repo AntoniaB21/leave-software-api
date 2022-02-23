@@ -10,6 +10,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+id.html
 
 ###< symfony/framework-bundle ###
 node_modules
