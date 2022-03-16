@@ -17,3 +17,9 @@ node_modules
 
 ### PEM File ###
 ec2-keys-leave-soft.pem
+
+M2DEV-21-22-Projet de spec.pptx
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
