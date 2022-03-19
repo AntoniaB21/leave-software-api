@@ -14,15 +14,28 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "pagination_items_per_page"=20
  * },
  *  collectionOperations={
- *      "get",
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tags list",
+ *      }
  *      "post"={
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can add tags",
  *      }
  * },
  *  itemOperations={
- *      "get",
- *      "put"
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tag detail",
+ *      },
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can update tag detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a tag",
+ *      },
  * })
  * @ORM\Entity(repositoryClass=TagRepository::class)
  */
