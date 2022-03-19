@@ -23,3 +23,7 @@ M2DEV-21-22-Projet de spec.pptx
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+#<Utils
+deploy.sh
+#>Utils
