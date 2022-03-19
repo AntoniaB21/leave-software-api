@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "get"={
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can see tags list",
- *      }
+ *      },
  *      "post"={
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can add tags",
