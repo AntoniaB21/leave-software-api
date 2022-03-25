@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,6 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @SerializedName("password")
      */
     private $plainPassword;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="user")
+     */
+    private $offRequests;
+
+    public function __construct()
+    {
+        $this->offRequests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,6 +153,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OffRequest>
+     */
+    public function getOffRequests(): Collection
+    {
+        return $this->offRequests;
+    }
+
+    public function addOffRequest(OffRequest $offRequest): self
+    {
+        if (!$this->offRequests->contains($offRequest)) {
+            $this->offRequests[] = $offRequest;
+            $offRequest->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffRequest(OffRequest $offRequest): self
+    {
+        if ($this->offRequests->removeElement($offRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($offRequest->getUser() === $this) {
+                $offRequest->setUser(null);
+            }
+        }
+
         return $this;
     }
 }
