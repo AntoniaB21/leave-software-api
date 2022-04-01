@@ -7,7 +7,36 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"offRequest:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"offRequest:write"}},
+ *      "pagination_items_per_page"=20
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security_message"="Only admin or owner of the request can see offRequests list",
+ *           },
+ *          "post"={
+ *              "security"="is_granted('ROLE_USER')",
+ *              "security_message"="Only logged-in users can add off request",
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security_message"="Only admin can see tag detail",
+ *          },
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security_message"="Only admin can update tag detail",
+ *          },
+ *          "delete"={
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security_message"="Only admin can delete a tag",
+ *          },
+ *      }
+ * )
  * @ORM\Entity(repositoryClass=OffRequestRepository::class)
  */
 class OffRequest
