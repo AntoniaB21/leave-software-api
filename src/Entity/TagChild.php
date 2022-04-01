@@ -7,7 +7,35 @@ use App\Repository\TagChildRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"tagChild:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"tagChildag:write"}},
+ *      "pagination_items_per_page"=20
+ * },
+ *  collectionOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tag child list",
+ *      },
+ *      "post"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can add tag child",
+ *      }
+ * },
+ *  itemOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tag child detail",
+ *      },
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can update tag child detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a tag",
+ *      },
+ * })
  * @ORM\Entity(repositoryClass=TagChildRepository::class)
  */
 class TagChild

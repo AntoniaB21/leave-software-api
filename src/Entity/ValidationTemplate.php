@@ -7,7 +7,35 @@ use App\Repository\ValidationTemplateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"validationTemplate:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"validationTemplate:write"}},
+ *      "pagination_items_per_page"=20
+ * },
+ *  collectionOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see all validation templates",
+ *      },
+ *      "post"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can add a validation template",
+ *      }
+ * },
+ *  itemOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see validation template detail",
+ *      },
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can update validation template detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a tag",
+ *      },
+ * })
  * @ORM\Entity(repositoryClass=ValidationTemplateRepository::class)
  */
 class ValidationTemplate

@@ -13,7 +13,35 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- * @ApiResource()
+ * * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"user:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"user:write"}},
+ *      "pagination_items_per_page"=20
+ * },
+ *  collectionOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see user list",
+ *      },
+ *      "post"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can add user",
+ *      }
+ * },
+ *  itemOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see user detail",
+ *      },
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can update user detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a tag",
+ *      },
+ * })
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
