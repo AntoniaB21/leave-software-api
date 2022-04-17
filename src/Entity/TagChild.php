@@ -22,7 +22,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "post"={
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can add tag child",
- *          "controller"= TagChildrenController::class,
  *      }
  * },
  *  itemOperations={

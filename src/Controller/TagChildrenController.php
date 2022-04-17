@@ -23,7 +23,10 @@ class TagChildrenController extends AbstractController {
 
     public function __invoke(TagChild $data ,Request $request){
         // récupérer le tag
-        
+        var_dump("coucou");
+        $tag = $data->getTag();
+        dd($data->getTag());
         return $data;
+
     }
 }
