@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Teams;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ApiResource(attributes={
@@ -24,7 +26,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          "security_message"="Only admin can see user list",
  *      },
  *      "post"={
- *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can add a user",
  *      }
  * },
@@ -83,9 +84,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $offRequests;
 
+    /**
+     * @SerializedName("teams")
+     * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"user:read", "user:write"})
+     * 
+     */
+    private $teams;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateEntrance;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=TagChild::class, inversedBy="users")
+     */
+    private $tagItems;
+
     public function __construct()
     {
         $this->offRequests = new ArrayCollection();
+        $this->tagItems = new ArrayCollection();
+        $this->dateEntrance = new \DateTime();
     }
 
     public function getId(): ?int
@@ -151,7 +173,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->plainPassword;
     }
 
     public function setPassword(string $password): self
@@ -217,6 +239,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $offRequest->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeams(): ?Teams
+    {
+        return $this->teams;
+    }
+
+    public function setTeams(?Teams $teams): self
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    public function getDateEntrance(): ?\DateTimeInterface
+    {
+        return $this->dateEntrance;
+    }
+
+    public function setDateEntrance(\DateTimeInterface $dateEntrance): self
+    {
+        $this->dateEntrance = $dateEntrance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TagChild>
+     */
+    public function getTagItems(): Collection
+    {
+        return $this->tagItems;
+    }
+
+    public function addTagItem(TagChild $tagItem): self
+    {
+        if (!$this->tagItems->contains($tagItem)) {
+            $this->tagItems[] = $tagItem;
+        }
+
+        return $this;
+    }
+
+    public function removeTagItem(TagChild $tagItem): self
+    {
+        $this->tagItems->removeElement($tagItem);
 
         return $this;
     }
