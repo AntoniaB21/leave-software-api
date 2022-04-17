@@ -72,14 +72,14 @@ class TagChild
     private $description;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @Groups({"tagChild:read", "tagChild:write", "tag:read"})
      * 
      */
     private $maxBalance;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      * @Groups({"tagChild:read", "tagChild:write", "tag:read"})
      * 
      */

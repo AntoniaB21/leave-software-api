@@ -62,6 +62,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read", "user:write"})
+     * 
      */
     private $roles = [];
 
@@ -95,6 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:read", "user:write"})
      */
     private $dateEntrance;
 
@@ -108,6 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->offRequests = new ArrayCollection();
         $this->tagItems = new ArrayCollection();
         $this->dateEntrance = new \DateTime();
+        $this->roles = new ArrayCollection(['ROLE_USER']);
     }
 
     public function getId(): ?int
@@ -159,11 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(array $roles): self
     {
-        if ($roles = []){
-            $this->roles = ['ROLE_USER'];
-        } else {
-            $this->roles = $roles;
-        }
+        $this->roles = $roles;
 
         return $this;
     }
