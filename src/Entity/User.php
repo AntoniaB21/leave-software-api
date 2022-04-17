@@ -89,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"users:read"})
+     * @Groups({"users:read", "users:write"})
      * 
      */
     private $teams;
@@ -107,17 +107,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $tagItems;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float",nullable=true)
      */
     private $daysEarned;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float",nullable=true)
      */
-    private $daysAsked;
+    private $daysTaken;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float",nullable=true)
      */
     private $daysLeft;
 
@@ -127,6 +127,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tagItems = new ArrayCollection();
         $this->dateEntrance = new \DateTime();
         $this->roles = new ArrayCollection(['ROLE_USER']);
+        $this->daysEarned = 0.0;
+        $this->daysTaken = 0.0;
+        $this->daysLeft = 0.0;
     }
 
     public function getId(): ?int
@@ -188,7 +191,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return $this->plainPassword;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -318,14 +321,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDaysAsked(): ?float
+    public function getDaysTaken(): ?float
     {
-        return $this->daysAsked;
+        return $this->daysTaken;
     }
 
-    public function setDaysAsked(float $daysAsked): self
+    public function setDaysTaken(float $daysTaken): self
     {
-        $this->daysAsked = $daysAsked;
+        $this->daysTaken = $daysTaken;
 
         return $this;
     }
