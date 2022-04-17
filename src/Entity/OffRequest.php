@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OffRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(attributes={
@@ -49,11 +50,13 @@ class OffRequest
     private $id;
 
     /**
+     * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateStart;
 
     /**
+     * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateEnd;
@@ -67,6 +70,12 @@ class OffRequest
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offRequests")
      */
     private $user;
+
+    /**
+     * @Assert\Choice({"draft", "pending", "accepted","rejected"})
+     * @ORM\Column(type="string", length=20)
+     */
+    private $status;
 
     public function getId(): ?int
     {
@@ -117,6 +126,18 @@ class OffRequest
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

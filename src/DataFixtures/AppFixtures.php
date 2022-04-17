@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Teams;
 use App\Entity\Tag;
 use App\Entity\TagChild;
+use App\Entity\OffRequest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -53,6 +54,8 @@ class AppFixtures extends Fixture
             $product->setPassword(
                 $this->userPasswordEncoder->encodePassword($product, 'azerty')
             );
+            
+
             $team2->addUser($product);
             $manager->persist($team2);
             $manager->persist($product);
@@ -68,11 +71,29 @@ class AppFixtures extends Fixture
         );
         $team1->addUser($teamLeader);
         $team1->addUser($adminUser);
+
+
+        // créer des off requests pour un autre user
+        $userTookRequest = new User();
+        $userTookRequest->setEmail('leaderIt@yopmail.fr');
+        $userTookRequest->setPlainPassword('azerty');
+        $userTookRequest->setRoles(["ROLE_MANAGER"]);
+        $userTookRequest->setPassword(
+            $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
+        );
+        $team2->addUser($userTookRequest);
+
+        $offRequest1 = new OffRequest();
+        $offRequest1->setDateStart(new \Datetime('first day of next month'));
+        $offRequest1->setDateEnd(new \Datetime('third day of next month'));
+        $offRequest1->setComments('Evenement familial');
+        $offRequest1->setComments('Evenement familial');
+        $offRequest1->setUser($userTookRequest);
+
         $manager->persist($teamLeader);
         $manager->persist($team1);
+        $manager->persist($team2);
 
-
-        
         // créer tags et tags child
         $tag1 = new Tag();
         $tag1->setName('Types de contrats');
@@ -124,6 +145,8 @@ class AppFixtures extends Fixture
 
         $manager->persist($tag1);
         $manager->persist($tag2);
+
+
         $manager->flush();
     }
 }
