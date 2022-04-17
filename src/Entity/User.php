@@ -16,8 +16,8 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ApiResource(attributes={
- *      "normalization_context"={"groups"={"user:read", "enable_max_depth"=true}},
- *      "denormalization_context"={"groups"={"user:write"}},
+ *      "normalization_context"={"groups"={"users:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"users:write"}},
  *      "pagination_items_per_page"=20
  * },
  *  collectionOperations={
@@ -56,13 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"users:read", "users:write"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"users:write"})
      * 
      */
     private $roles = [];
@@ -74,37 +74,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @Groups("user:write")
+     * @Groups("users:write")
      * @SerializedName("password")
      */
     private $plainPassword;
 
     /**
      * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="user")
-     * @Groups({"user:read"})
+     * @Groups({"users:read"})
      * 
      */
     private $offRequests;
 
     /**
-     * @SerializedName("teams")
      * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=true)
-     * @Groups({"user:read", "user:write"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"users:read"})
      * 
      */
     private $teams;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"users:read", "users:write"})
      */
     private $dateEntrance;
 
     /**
      * @ORM\ManyToMany(targetEntity=TagChild::class, inversedBy="users")
+     * @Groups({"users:read"})
      */
     private $tagItems;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $daysEarned;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $daysAsked;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $daysLeft;
 
     public function __construct()
     {
@@ -287,6 +302,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeTagItem(TagChild $tagItem): self
     {
         $this->tagItems->removeElement($tagItem);
+
+        return $this;
+    }
+
+    public function getDaysEarned(): ?float
+    {
+        return $this->daysEarned;
+    }
+
+    public function setDaysEarned(float $daysEarned): self
+    {
+        $this->daysEarned = $daysEarned;
+
+        return $this;
+    }
+
+    public function getDaysAsked(): ?float
+    {
+        return $this->daysAsked;
+    }
+
+    public function setDaysAsked(float $daysAsked): self
+    {
+        $this->daysAsked = $daysAsked;
+
+        return $this;
+    }
+
+    public function getDaysLeft(): ?float
+    {
+        return $this->daysLeft;
+    }
+
+    public function setDaysLeft(float $daysLeft): self
+    {
+        $this->daysLeft = $daysLeft;
 
         return $this;
     }

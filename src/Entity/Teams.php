@@ -7,9 +7,37 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"teams:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"teams:write"}},
+ *      "pagination_items_per_page"=20
+ * },
+ *  collectionOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see teams list",
+ *      },
+ *      "post"={
+ *          "security_message"="Only admin can add a teams",
+ *      }
+ * },
+ *  itemOperations={
+*       "get"={
+*          "security"="is_granted('ROLE_ADMIN') or object == teams",
+*          "security_message"= "You are not the owner of this profile",
+*       }, 
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN') or object == teams",
+ *          "security_message"="Only admin or owner can update detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a teams",
+ *      },
+ * })
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
  */
 class Teams
@@ -23,11 +51,15 @@ class Teams
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"teams:read", "teams:read", "users:read"})
+     * 
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"teams:read", "teams:read", "users:read"})
+     * 
      */
     private $slug;
 
@@ -38,7 +70,7 @@ class Teams
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,22 +110,22 @@ class Teams
         return $this->users;
     }
 
-    public function addUser(User $user): self
+    public function addUser(User $users): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setTeams($this);
+        if (!$this->users->contains($users)) {
+            $this->users[] = $users;
+            $users->setTeams($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removeUser(User $users): self
     {
-        if ($this->users->removeElement($user)) {
+        if ($this->users->removeElement($users)) {
             // set the owning side to null (unless already changed)
-            if ($user->getTeams() === $this) {
-                $user->setTeams(null);
+            if ($users->getTeams() === $this) {
+                $users->setTeams(null);
             }
         }
 

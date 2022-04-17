@@ -52,14 +52,14 @@ class TagChild
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"tagChild:read", "tagChild:write", "tag:read"})
+     * @Groups({"tagChild:read", "tagChild:write", "tag:read", "users:read"})
      * 
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=350)
-     * @Groups({"tagChild:read", "tagChild:write", "tag:read"})
+     * @Groups({"tagChild:read", "tagChild:write", "tag:read", "users:read"})
      * 
      */
     private $slug;

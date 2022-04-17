@@ -91,6 +91,7 @@ class AppFixtures extends Fixture
         $adminUser->setPassword(
             $this->userPasswordEncoder->encodePassword($adminUser, 'azerty')
         );
+        $adminUser->setDateEntrance(new \DateTime('11 months ago'));
         $adminUser->setRoles(["ROLE_ADMIN"]);
         $manager->persist($adminUser);
 
@@ -98,7 +99,7 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 4; $i++) {
             $product = new User();
-            $product->setEmail('user '.$i.'@yopmail.fr');
+            $product->setEmail('user'.$i.'@yopmail.fr');
             $product->setPlainPassword('azerty');
             $product->setRoles(["ROLE_USER"]);
             $product->setPassword(
@@ -110,7 +111,6 @@ class AppFixtures extends Fixture
             $manager->persist($team2);
             $manager->persist($product);
         }
-
 
         // créer 1 team leader IT
         $teamLeader = new User();
@@ -141,12 +141,23 @@ class AppFixtures extends Fixture
         $offRequest1->setStatus('pending');
         $offRequest1->setUser($userTookRequest);
 
+
+        $offRequest2 = new OffRequest();
+        $offRequest2->setDateStart(new \Datetime('Monday last week'));
+        $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
+        $offRequest2->setComments('Evenement familial');
+        $offRequest2->setStatus('accepted');
+        $offRequest2->setUser($userTookRequest);
+
         $manager->persist($offRequest1);
+        $manager->persist($offRequest2);
+
+
+        // NEXT : create validation template
+
         $manager->persist($teamLeader);
         $manager->persist($team1);
         $manager->persist($team2);
-
-
 
         $manager->persist($tag1);
         $manager->persist($tag2);
