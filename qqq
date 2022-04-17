@@ -1,0 +1,290 @@
+[33mcommit 5401259158587a4032e7ee23d31708d246db7d16[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Apr 16 16:32:13 2022 +0200
+
+    update cors
+
+[33mcommit 65ac8567451c029b709a5ce04d077ed1a53c65d5[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Apr 16 15:16:25 2022 +0200
+
+    lexik fix
+
+[33mcommit 3705585552cfd79b5074e202f5fc326bfa47b3ca[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Apr 16 14:08:54 2022 +0200
+
+    update user entity
+
+[33mcommit f671c746ddda179de0db2eb7cd4db95207eaa871[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sun Apr 3 23:14:49 2022 +0200
+
+    resolve url
+
+[33mcommit aef1442612b2e81318c61375e3331be14308d399[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Apr 1 15:20:03 2022 +0200
+
+    add annotation in user, validation template, tagchild
+
+[33mcommit 753e012976ed48d53fb6afecfb200c67b026620b[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Apr 1 15:15:04 2022 +0200
+
+    add annotation off requests
+
+[33mcommit 164ff1264e7b57dd5cb03dcd2955e3df24bab554[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Thu Mar 31 10:41:23 2022 +0200
+
+    add docker database
+
+[33mcommit 9380b510ed769882f9786b0375dbb3de86ff60ce[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 26 22:31:45 2022 +0100
+
+    update cors env
+
+[33mcommit a1e0e8c5091de9416e194c75944c89f3e83e532f[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 26 19:18:48 2022 +0100
+
+    fix cors
+
+[33mcommit 989dc38daea94bbf8ae7220d6751dcd107fdccc7[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Mar 25 22:55:22 2022 +0100
+
+    add dist env
+
+[33mcommit f7df98dcac50413a18c39bb7f63d720907e2718a[m
+Merge: 218619e 71d012b
+Author: AntoniaB21 <91070739+AntoniaB21@users.noreply.github.com>
+Date:   Fri Mar 25 17:38:59 2022 +0100
+
+    Merge pull request #1 from AntoniaB21/heroku-test
+    
+    Tags entities
+
+[33mcommit 71d012b2d51375f8e36f685434de77caa7d48c1a[m[33m ([m[1;31morigin/heroku-test[m[33m, [m[1;32mheroku-test[m[33m)[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Mar 25 17:36:47 2022 +0100
+
+    add entities crud
+
+[33mcommit 6a6bab82a732a927634d00cb0ec6ac1b19fb08b8[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Thu Mar 24 21:37:14 2022 +0100
+
+    procfile env
+
+[33mcommit 218619e99478993e6bd5a09802078372825ffbe2[m[33m ([m[1;31mheroku/heroku-test[m[33m)[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Thu Mar 24 20:54:22 2022 +0100
+
+    heroku
+
+[33mcommit dec2d7fb38aee78d230810eae20d8c239478b947[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Mar 23 22:38:40 2022 +0100
+
+    remove app json
+
+[33mcommit b2f9001bbb403f931d812ce954b8bda3b531c7b4[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Mar 23 22:34:13 2022 +0100
+
+    make it better
+
+[33mcommit f223b103480888346fad09a57cae34e6ff729790[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 19 20:32:58 2022 +0100
+
+    update tag entity
+
+[33mcommit 8aab31a352aa813b5f8003ebfa60b5237373b622[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 19 20:24:56 2022 +0100
+
+    security tags update, delete, get
+
+[33mcommit d27aab9ee9d4f6afca8ffa7087e34f7d79d43682[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 19 20:23:30 2022 +0100
+
+    security post tag
+
+[33mcommit 2618bd3ee93f0d5a51897cfe03bd227e6e199c9e[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sat Mar 19 19:56:39 2022 +0100
+
+    add tag entity CRUD
+
+[33mcommit 1e304fb8934a69352e9051d804399c2e35a311b5[m
+Author: Ubuntu <ubuntu@ip-172-31-12-33.eu-west-3.compute.internal>
+Date:   Fri Mar 18 15:41:52 2022 +0000
+
+    remove doctrine migration
+
+[33mcommit 3331f3aac9516989c4d747442fe303bb94926101[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Mar 18 16:00:03 2022 +0100
+
+    finalize token
+
+[33mcommit 6926ee72df521ed132fbe2f1aab6626f620f522d[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Mar 18 15:42:18 2022 +0100
+
+    hash password user
+
+[33mcommit 4a240b39e0db524bb47700afd960e7aecb04fd9d[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Fri Mar 18 11:34:44 2022 +0100
+
+    fix jwt authorize button
+
+[33mcommit b9ca3a2102aad2735b2951da77b3f8872b4d829f[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Thu Mar 17 23:45:59 2022 +0100
+
+    encode user password
+
+[33mcommit 57ae7d6c5360987676b32061a450b62393d0011c[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Mar 16 23:22:40 2022 +0100
+
+    remove docker-compose
+
+[33mcommit 0cb3cd555c9f9e729fd3cecf856a631093fe4607[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Mar 16 23:05:08 2022 +0100
+
+    update db
+
+[33mcommit bc03f55aef53200b6c7ad199c454af4908669eb0[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Mar 16 15:31:36 2022 +0100
+
+    add user entity
+
+[33mcommit 676d89b98260cd463fef63b5f6d8865f49a34ece[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Wed Feb 23 23:41:19 2022 +0100
+
+    remove /api in path
+
+[33mcommit e4f5a7f311bb9ae3a8bd77ad71edbe84cc46838b[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sun Feb 20 15:57:32 2022 +0100
+
+    add app.json
+
+[33mcommit e2a682fb45c77b9ba8418ea87ca44d87d637ee5e[m
+Author: = <antonia.balluais@mail-ecv.fr>
+Date:   Sun Feb 20 00:44:43 2022 +0100
+
+    add tag and tag children
+
+[33mcommit 74e66eb43ab1de98a8e095d530b57ffd48621970[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Tue Jan 18 22:33:53 2022 +0100
+
+    test entities
+
+[33mcommit 42423117f1d1b23903c9bda0273f5dcb1c3a91d0[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Tue Jan 18 21:29:25 2022 +0100
+
+    remove front-end
+
+[33mcommit 45e472a59dbbb03ca67d163f9279c217bc1c5fc5[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Tue Jan 18 21:11:43 2022 +0100
+
+    add fron
+
+[33mcommit 8d0d03fb6285eb22d99d312a8e32d7e76ff8ed69[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Mon Jan 17 23:21:49 2022 +0100
+
+    rm front-end
+
+[33mcommit a66434a51cd56bb8346719850af8fa035020ac25[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Mon Jan 17 22:24:11 2022 +0100
+
+    add front end
+
+[33mcommit bb868ef65d062d7725da78f595b17ec8c0275a71[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Mon Jan 17 18:40:52 2022 +0100
+
+    remove c:c
+
+[33mcommit 45139c5aa0161293be7958593e4c9e4274cb34e1[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sun Jan 16 19:50:22 2022 +0100
+
+    pem
+
+[33mcommit 055f8639d8d1ac562de0520f150f464b15c768e0[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sun Jan 16 18:55:20 2022 +0100
+
+    update composer script
+
+[33mcommit 71c0f5dbc43fa1b6de60bfbb0a2c9ed1ac6b7904[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sun Jan 16 18:53:05 2022 +0100
+
+    remove front-end
+
+[33mcommit 3997c070d14e942f3009375e30d1b52e8a603a0f[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sun Jan 16 18:42:59 2022 +0100
+
+    apache pack
+
+[33mcommit a5971a71c64d153f0939ce2155bdb2878c34a9ad[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sat Jan 15 23:18:15 2022 +0100
+
+    update composer lock
+
+[33mcommit 11e84dd6584a5f361bc084324f404a01f5ae60e1[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sat Jan 15 23:02:05 2022 +0100
+
+    add profiler
+
+[33mcommit b1804f53ebce9d7a31eee8f5e8f440639be6f9d3[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Sat Jan 15 22:46:58 2022 +0100
+
+    Heroku Procfile
+
+[33mcommit 1067c3bee251101cbf0d29c938853acc36abdc07[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Fri Jan 7 16:57:39 2022 +0100
+
+    add repository
+
+[33mcommit 219529a4df8b06922e831d9c667ed209527a2652[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Thu Dec 16 23:05:50 2021 +0100
+
+    add front-end directory
+
+[33mcommit 4af3869506a02e9ec909fa94ffeff151ff2b0914[m
+Author: AntoniaB21 <antonia.balluais@mail-ecv.fr>
+Date:   Thu Dec 16 22:38:46 2021 +0100
+
+    setup api platform
+
+[33mcommit e0a5b077f659877750e9a624ee961d66a896505c[m
+Author: AntoniaB21 <91070739+AntoniaB21@users.noreply.github.com>
+Date:   Thu Dec 16 21:16:31 2021 +0100
+
+    Initial commit

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TagRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -49,16 +51,27 @@ class Tag
     private $id;
 
     /**
-     * @Groups({"tag:read", "tag:write"})
+     * @Groups({"tag:read", "tag:write", "tagChild:read"})
      * @ORM\Column(type="string", length=50)
      */
     private $name;
 
     /**
-     * @Groups({"tag:read", "tag:write"})
+     * @Groups({"tag:read", "tag:write", "tagChild:read"})
      * @ORM\Column(type="string", length=100)
      */
     private $slug;
+
+    /**
+     * @Groups({"tag:read"})
+     * @ORM\OneToMany(targetEntity=TagChild::class, mappedBy="tag")
+     */
+    private $tagChildren;
+
+    public function __construct()
+    {
+        $this->tagChildren = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +98,36 @@ class Tag
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TagChild>
+     */
+    public function getTagChildren(): Collection
+    {
+        return $this->tagChildren;
+    }
+
+    public function addTagChild(TagChild $tagChild): self
+    {
+        if (!$this->tagChildren->contains($tagChild)) {
+            $this->tagChildren[] = $tagChild;
+            $tagChild->setTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTagChild(TagChild $tagChild): self
+    {
+        if ($this->tagChildren->removeElement($tagChild)) {
+            // set the owning side to null (unless already changed)
+            if ($tagChild->getTag() === $this) {
+                $tagChild->setTag(null);
+            }
+        }
 
         return $this;
     }

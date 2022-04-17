@@ -13,7 +13,35 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"user:read", "enable_max_depth"=true}},
+ *      "denormalization_context"={"groups"={"user:write"}},
+ *      "pagination_items_per_page"=20
+ * },
+ *  collectionOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tag child list",
+ *      },
+ *      "post"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can add tag child",
+ *      }
+ * },
+ *  itemOperations={
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can see tag child detail",
+ *      },
+ *      "put"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can update tag child detail",
+ *      },
+ *      "delete"={
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only admin can delete a tag",
+ *      },
+ * })
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -27,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
@@ -49,6 +78,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="user")
+     * @Groups({"user:read"})
+     * 
      */
     private $offRequests;
 
@@ -106,7 +137,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+        if ($roles = []){
+            $this->roles = ['ROLE_USER'];
+        } else {
+            $this->roles = $roles;
+        }
 
         return $this;
     }
