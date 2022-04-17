@@ -21,25 +21,25 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *  collectionOperations={
  *      "get"={
  *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can see tag child list",
+ *          "security_message"="Only admin can see user list",
  *      },
  *      "post"={
  *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can add tag child",
+ *          "security_message"="Only admin can add a user",
  *      }
  * },
  *  itemOperations={
- *      "get"={
- *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can see tag child detail",
- *      },
+*       "get"={
+*          "security"="is_granted('ROLE_ADMIN') or object == user",
+*          "security_message"= "You are not the owner of this profile",
+*       }, 
  *      "put"={
- *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can update tag child detail",
+ *          "security"="is_granted('ROLE_ADMIN') or object == user",
+ *          "security_message"="Only admin or owner can update detail",
  *      },
  *      "delete"={
  *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can delete a tag",
+ *          "security_message"="Only admin can delete a user",
  *      },
  * })
  * @ORM\Entity(repositoryClass=UserRepository::class)

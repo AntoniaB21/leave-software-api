@@ -5,7 +5,6 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TagChildRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Controller\TagChildrenController;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
