@@ -24,76 +24,6 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        // create teams
-        $team1 = new Teams();
-        $team1->setName('Direction');
-        $team1->setSlug('direction');
-        $manager->persist($team1);
-
-        $team2 = new Teams();
-        $team2->setName('IT');
-        $team2->setSlug('it');
-        // $manager->persist($team2);
-
-        // create admin user
-        $adminUser = new User();
-        $adminUser->setEmail('admin@yopmail.fr');
-        $adminUser->setPlainPassword('azerty');
-        $adminUser->setPassword(
-            $this->userPasswordEncoder->encodePassword($adminUser, 'azerty')
-        );
-        $adminUser->setRoles(["ROLE_ADMIN"]);
-        $manager->persist($adminUser);
-
-        // créer 4 users et les intégrer à la teams 2
-        for ($i = 0; $i < 4; $i++) {
-            $product = new User();
-            $product->setEmail('user '.$i.'@yopmail.fr');
-            $product->setPlainPassword('azerty');
-            $product->setRoles(["ROLE_USER"]);
-            $product->setPassword(
-                $this->userPasswordEncoder->encodePassword($product, 'azerty')
-            );
-            
-
-            $team2->addUser($product);
-            $manager->persist($team2);
-            $manager->persist($product);
-        }
-
-        // créer 1 team leader IT
-        $teamLeader = new User();
-        $teamLeader->setEmail('leaderIt@yopmail.fr');
-        $teamLeader->setPlainPassword('azerty');
-        $teamLeader->setRoles(["ROLE_MANAGER"]);
-        $teamLeader->setPassword(
-            $this->userPasswordEncoder->encodePassword($teamLeader, 'azerty')
-        );
-        $team1->addUser($teamLeader);
-        $team1->addUser($adminUser);
-
-
-        // créer des off requests pour un autre user
-        $userTookRequest = new User();
-        $userTookRequest->setEmail('leaderIt@yopmail.fr');
-        $userTookRequest->setPlainPassword('azerty');
-        $userTookRequest->setRoles(["ROLE_MANAGER"]);
-        $userTookRequest->setPassword(
-            $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
-        );
-        $team2->addUser($userTookRequest);
-
-        $offRequest1 = new OffRequest();
-        $offRequest1->setDateStart(new \Datetime('first day of next month'));
-        $offRequest1->setDateEnd(new \Datetime('third day of next month'));
-        $offRequest1->setComments('Evenement familial');
-        $offRequest1->setComments('Evenement familial');
-        $offRequest1->setUser($userTookRequest);
-
-        $manager->persist($teamLeader);
-        $manager->persist($team1);
-        $manager->persist($team2);
-
         // créer tags et tags child
         $tag1 = new Tag();
         $tag1->setName('Types de contrats');
@@ -142,6 +72,81 @@ class AppFixtures extends Fixture
         $manager->persist($tagChild2);
         $manager->persist($tagChild3);
         $manager->persist($tagChild4);
+
+        // create teams
+        $team1 = new Teams();
+        $team1->setName('Direction');
+        $team1->setSlug('direction');
+        $manager->persist($team1);
+
+        $team2 = new Teams();
+        $team2->setName('IT');
+        $team2->setSlug('it');
+        // $manager->persist($team2);
+
+        // create admin user
+        $adminUser = new User();
+        $adminUser->setEmail('admin@yopmail.fr');
+        $adminUser->setPlainPassword('azerty');
+        $adminUser->setPassword(
+            $this->userPasswordEncoder->encodePassword($adminUser, 'azerty')
+        );
+        $adminUser->setRoles(["ROLE_ADMIN"]);
+        $manager->persist($adminUser);
+
+        // créer 4 users et les intégrer à la teams 2
+
+        for ($i = 0; $i < 4; $i++) {
+            $product = new User();
+            $product->setEmail('user '.$i.'@yopmail.fr');
+            $product->setPlainPassword('azerty');
+            $product->setRoles(["ROLE_USER"]);
+            $product->setPassword(
+                $this->userPasswordEncoder->encodePassword($product, 'azerty')
+            );
+            $product->setDateEntrance(new \DateTime('9 months ago'));
+            $product->addTagItem($tagChild3);
+            $team2->addUser($product);
+            $manager->persist($team2);
+            $manager->persist($product);
+        }
+
+
+        // créer 1 team leader IT
+        $teamLeader = new User();
+        $teamLeader->setEmail('leaderIt@yopmail.fr');
+        $teamLeader->setPlainPassword('azerty');
+        $teamLeader->setRoles(["ROLE_MANAGER"]);
+        $teamLeader->setPassword(
+            $this->userPasswordEncoder->encodePassword($teamLeader, 'azerty')
+        );
+        $team1->addUser($teamLeader);
+        $team1->addUser($adminUser);
+
+        // créer des off requests pour un autre user
+        $userTookRequest = new User();
+        $userTookRequest->setEmail('userAsked@yopmail.fr');
+        $userTookRequest->setPlainPassword('azerty');
+        $userTookRequest->setRoles(["ROLE_USER"]);
+        $userTookRequest->setPassword(
+            $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
+        );
+        $team2->addUser($userTookRequest);
+        $manager->persist($userTookRequest);
+
+        $offRequest1 = new OffRequest();
+        $offRequest1->setDateStart(new \Datetime('Monday next week'));
+        $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
+        $offRequest1->setComments('Evenement familial');
+        $offRequest1->setStatus('pending');
+        $offRequest1->setUser($userTookRequest);
+
+        $manager->persist($offRequest1);
+        $manager->persist($teamLeader);
+        $manager->persist($team1);
+        $manager->persist($team2);
+
+
 
         $manager->persist($tag1);
         $manager->persist($tag2);
