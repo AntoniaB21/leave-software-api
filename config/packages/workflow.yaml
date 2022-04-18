@@ -25,5 +25,7 @@ framework:
                     guard: is_granted('ROLE_MANAGER')
                     from: pending
                     to: rejected
-
-        
+                cancel:
+                    guard: is_granted('ROLE_ADMIN')
+                    from: accepted
+                    to: rejected
