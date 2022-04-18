@@ -51,12 +51,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users:read", "offRequest:read"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"users:read", "users:write"})
+     * @Groups({"users:read", "users:write", "offRequest:read"})
      */
     private $email;
 
@@ -89,34 +91,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"users:read", "users:write"})
+     * @Groups({"users:read", "users:write", "offRequest:read"})
      * 
      */
     private $teams;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"users:read", "users:write"})
+     * @Groups({"users:read", "users:write", "offRequest:read"})
      */
     private $dateEntrance;
 
     /**
      * @ORM\ManyToMany(targetEntity=TagChild::class, inversedBy="users")
-     * @Groups({"users:read"})
+     * @Groups({"users:read", "offRequest:read"})
      */
     private $tagItems;
 
     /**
      * @ORM\Column(type="float",nullable=true)
+     * @Groups({"users:read", "users:write", "offRequest:read"})
+     * 
      */
     private $daysEarned;
 
     /**
      * @ORM\Column(type="float",nullable=true)
+     * @Groups({"users:read", "users:write", "offRequest:read"})
+     * 
      */
     private $daysTaken;
 
     /**
+     * @Groups({"users:read", "users:write", "offRequest:read"})
      * @ORM\Column(type="float",nullable=true)
      */
     private $daysLeft;

@@ -144,6 +144,9 @@ class AppFixtures extends Fixture
             $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
         );
         $userTookRequest->setTeams($team2);
+        $userTookRequest->setDaysTaken(2);
+        $userTookRequest->setDaysLeft(13);
+        $userTookRequest->setDaysEarned(15);
         $manager->persist($userTookRequest);
 
         $offRequest1 = new OffRequest();

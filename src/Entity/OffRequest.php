@@ -6,6 +6,7 @@ use App\Repository\OffRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(attributes={
@@ -25,11 +26,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      },
  *      itemOperations={
  *          "get"={
- *              "security"="is_granted('ROLE_ADMIN')",
+*          "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only admin can see tag detail",
  *          },
  *          "put"={
- *              "security"="is_granted('ROLE_ADMIN')",
+*               "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only admin can update tag detail",
  *          },
  *          "delete"={
@@ -50,29 +51,36 @@ class OffRequest
     private $id;
 
     /**
+     * @Groups({"offRequest:read","offRequest:write"})
      * @Assert\GreaterThan("today")
+     * @Assert\Unique
      * @ORM\Column(type="datetime")
      */
     private $dateStart;
 
     /**
+     * @Groups({"offRequest:read","offRequest:write"})
      * @Assert\GreaterThan("today")
+     * @Assert\Unique
      * @ORM\Column(type="datetime")
      */
     private $dateEnd;
 
     /**
+     * @Groups({"offRequest:read","offRequest:write"})
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $comments;
 
     /**
+     * @Groups({"offRequest:read","offRequest:write"})
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offRequests")
      */
     private $user;
 
     /**
      * @Assert\Choice({"draft", "pending", "accepted","rejected"})
+     * @Groups({"offRequest:read"})
      * @ORM\Column(type="string", length=20)
      */
     private $status;
