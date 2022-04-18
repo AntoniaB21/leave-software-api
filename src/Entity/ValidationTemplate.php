@@ -59,10 +59,10 @@ class ValidationTemplate
      */
     private $mainValidator;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     */
-    private $secondValidator;
+    // /**
+    //  * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+    //  */
+    // private $secondValidator;
     
     public function getId(): ?int
     {
@@ -93,15 +93,15 @@ class ValidationTemplate
         return $this;
     }
 
-    public function getSecondValidator(): ?User
-    {
-        return $this->secondValidator;
-    }
+    // public function getSecondValidator(): ?User
+    // {
+    //     return $this->secondValidator;
+    // }
 
-    public function setSecondValidator(?User $secondValidator): self
-    {
-        $this->secondValidator = $secondValidator;
+    // public function setSecondValidator(?User $secondValidator): self
+    // {
+    //     $this->secondValidator = $secondValidator;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

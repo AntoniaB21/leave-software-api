@@ -1,2 +1,27 @@
 framework:
-    workflows: null
+    workflows:
+        off_request_validation:
+            type : 'state_machine'
+            marking_store :
+                type: 'method'
+                property: 'status'
+            supports: 
+                - App\Entity\OffRequest
+            initial_marking: draft
+            places:
+                - draft
+                - pending
+                - accepted
+                - rejected
+            transitions:
+                pending:
+                    from: draft
+                    to: pending
+                accept:
+                    from: pending
+                    to: accepted
+                reject:
+                    from: pending
+                    to: rejected
+
+        

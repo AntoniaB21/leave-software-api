@@ -168,7 +168,7 @@ class AppFixtures extends Fixture
         $validationTemplateIt = new ValidationTemplate();
         $validationTemplateIt->setTeam($team2);
         $validationTemplateIt->setMainValidator($teamLeader);
-        $validationTemplateIt->setSecondValidator($adminUser);
+        // $validationTemplateIt->setSecondValidator($adminUser);
 
         $manager->persist($validationTemplateIt);
 
