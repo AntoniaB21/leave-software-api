@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Workflow\Registry;
 use Symfony\Component\Workflow\WorkflowInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Workflow\Exception\NotEnabledTransitionException;
 
 class ValidationOffRequestController extends AbstractController
 {
@@ -26,15 +27,15 @@ class ValidationOffRequestController extends AbstractController
         $this->entityManager = $entityManager;
         $this->offRequestValidationStateMachine = $offRequestValidationStateMachine;
     }
-
+    
     public function __invoke(OffRequest $data, Request $request, String $to) : OffRequest
     {
         $workflow = $this->registry->get($data, 'off_request_validation');
 
         try {
             $this->offRequestValidationStateMachine->apply($data, $to);
-        }catch (LogicException $logicException){
-            return $logicException;
+        }catch (NotEnabledTransitionException $logicException){
+            dd($logicException->getTransitionBlockerList());
         }
         $this->entityManager->persist($data);
         $this->entityManager->flush();

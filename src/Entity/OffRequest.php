@@ -20,11 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "security_message"="Only admin or owner of the request can see offRequests list",
  *           },
- *          "post"={
- *              "security"="is_granted('ROLE_USER')",
- *              "security_message"="Only logged-in users can add off request",
- *          },
- *          "get"={
+ *          "transitionEvent"={
+ *               "method"="GET",
  *               "security"="is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') ",
  *               "path"="/off_requests/{id}/{to}",
  *               "controller"=ValidationOffRequestController::class,
@@ -32,6 +29,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               "read"=false,
  *               "defaults"={"_api_receive"=false}
  *          },
+ *          "post"={
+ *              "security"="is_granted('ROLE_USER')",
+ *              "security_message"="Only logged-in users can add off request",
+ *          }
  *      },
  *      itemOperations={
  *          "get"={
