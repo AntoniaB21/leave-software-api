@@ -41,7 +41,9 @@ class AppFixtures extends Fixture
 
         // // create admin user
         $adminUser = new User();
-        $adminUser->setEmail('admin@yopmail.fr');
+        $adminUser->setFirstName('Admin');
+        $adminUser->setLastName('Doe');
+        $adminUser->setEmail('admin282828@yopmail.fr');
         $adminUser->setPlainPassword('azerty');
         $adminUser->setPassword(
             $this->userPasswordEncoder->encodePassword($adminUser, 'azerty')
@@ -109,6 +111,8 @@ class AppFixtures extends Fixture
         // créer 4 users et les intégrer à la teams 2
         for ($i = 0; $i < 4; $i++) {
             $product = new User();
+            $product->setFirstName('User'.$i);
+            $product->setLastName('Doe'.$i);
             $product->setEmail('user'.$i.'@yopmail.fr');
             $product->setPlainPassword('azerty');
             $product->setRoles(["ROLE_USER"]);
@@ -126,6 +130,8 @@ class AppFixtures extends Fixture
 
         // créer 1 team leader IT
         $teamLeader = new User();
+        $teamLeader->setFirstName('Team');
+        $teamLeader->setLastName('Leader');
         $teamLeader->setEmail('leaderIt@yopmail.fr');
         $teamLeader->setPlainPassword('azerty');
         $teamLeader->setRoles(["ROLE_MANAGER"]);
@@ -137,6 +143,8 @@ class AppFixtures extends Fixture
 
         // créer des off requests pour un autre user
         $userTookRequest = new User();
+        $userTookRequest->setFirstName('Preneur');
+        $userTookRequest->setLastName('Congés');
         $userTookRequest->setEmail('userAsked@yopmail.fr');
         $userTookRequest->setPlainPassword('azerty');
         $userTookRequest->setRoles(["ROLE_USER"]);
@@ -154,7 +162,7 @@ class AppFixtures extends Fixture
         $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
         $offRequest1->setComments('Autre evenement familial');
         $offRequest1->setStatus('pending');
-        $offRequest1->setCount(2.5);
+        $offRequest1->setCount(4);
         $offRequest1->setUser($userTookRequest);
 
         $manager->persist($offRequest1);
@@ -164,7 +172,7 @@ class AppFixtures extends Fixture
         $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
         $offRequest2->setComments('Evenement familial');
         $offRequest2->setStatus('accepted');
-        $offRequest1->setCount(2.5);
+        $offRequest2->setCount(4);
         $offRequest2->setUser($userTookRequest);
 
         $manager->persist($offRequest2);

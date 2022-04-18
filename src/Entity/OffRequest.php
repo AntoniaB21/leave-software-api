@@ -62,7 +62,7 @@ class OffRequest
     private $id;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @Assert\GreaterThan("today")
      * @Assert\Unique
      * @ORM\Column(type="datetime")
@@ -70,7 +70,7 @@ class OffRequest
     private $dateStart;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @Assert\GreaterThan("today")
      * @Assert\Unique
      * @ORM\Column(type="datetime")
@@ -78,7 +78,7 @@ class OffRequest
     private $dateEnd;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $comments;
@@ -90,7 +90,7 @@ class OffRequest
     private $user;
 
     /**
-     * @Assert\Choice({"draft", "pending", "accepted","rejected"})
+     * @Assert\Choice({"draft", "pending", "accepted","rejected", "users:read"})
      * @Groups({"offRequest:read"})
      * @ORM\Column(type="string", length=20)
      */
@@ -98,7 +98,7 @@ class OffRequest
 
     /**
      * @Assert\Type("float")
-     * @Groups({"offRequest:read","offRequest:write"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @ORM\Column(type="float")
      */
     private $count;
