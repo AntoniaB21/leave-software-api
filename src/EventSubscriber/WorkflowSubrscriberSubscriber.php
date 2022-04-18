@@ -32,6 +32,7 @@ class WorkflowSubrscriberSubscriber implements EventSubscriberInterface
         // envoyer un email quand le status est à jour
         $destinataire = $event->getSubject()->getUser()->getEmail();
 
+        // NE PAS SUPPRILER
         // $email = (new Email())
         // ->from('antonia.balluais@vmed.fr')
         // ->to('admin282828@yopmail.fr')
@@ -39,18 +40,30 @@ class WorkflowSubrscriberSubscriber implements EventSubscriberInterface
         // ->text('Votre demande de congés a été '. $event->getSubject()->getStatus());
         // $this->mailer->send($email);
 
-        // create notification
-        $notification = new Notifications();
-        $notification->setMessage('Votre demande de congés a été '. $event->getSubject()->getStatus());
-        $notification->setUser($event->getSubject()->getUser());
-        $this->entityManager->persist($notification);
+        // // create notification
+        // $notification = new Notifications();
+        // $notification->setMessage('Votre demande de congés a été '. $event->getSubject()->getStatus());
+        // $notification->setUser($event->getSubject()->getUser());
+        // $this->entityManager->persist($notification);
+        // $this->entityManager->flush();
+    }
+
+    public function DaysLeftUpdated(Event $event){
+        // dd($event->getSubject());
+        $offRequest = $event->getSubject();
+        $user = $event->getSubject()->getUser();
+        $user->setDaysLeft($user->getDaysLeft() - $offRequest->getCount());
+
+        $this->entityManager->persist($user);
+        $this->entityManager->persist($offRequest);
         $this->entityManager->flush();
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [
             'workflow.off_request_validation.entered' => 'AcceptedStatusUpdated',
+            'workflow.off_request_validation.completed.accepted' => 'DaysLeftUpdated',
         ];
     }
 }

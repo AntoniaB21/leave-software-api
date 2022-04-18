@@ -96,6 +96,13 @@ class OffRequest
      */
     private $status;
 
+    /**
+     * @Assert\Type("float")
+     * @Groups({"offRequest:read","offRequest:write"})
+     * @ORM\Column(type="float")
+     */
+    private $count;
+
     public function __construct() {
         $this->status = "draft";
     }
@@ -161,6 +168,18 @@ class OffRequest
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCount(): ?float
+    {
+        return $this->count;
+    }
+
+    public function setCount(float $count): self
+    {
+        $this->count = $count;
 
         return $this;
     }

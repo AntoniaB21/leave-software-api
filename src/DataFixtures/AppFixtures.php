@@ -154,6 +154,7 @@ class AppFixtures extends Fixture
         $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
         $offRequest1->setComments('Autre evenement familial');
         $offRequest1->setStatus('pending');
+        $offRequest1->setCount(2.5);
         $offRequest1->setUser($userTookRequest);
 
         $manager->persist($offRequest1);
@@ -163,6 +164,7 @@ class AppFixtures extends Fixture
         $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
         $offRequest2->setComments('Evenement familial');
         $offRequest2->setStatus('accepted');
+        $offRequest1->setCount(2.5);
         $offRequest2->setUser($userTookRequest);
 
         $manager->persist($offRequest2);
