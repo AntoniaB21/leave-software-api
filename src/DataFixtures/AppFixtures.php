@@ -24,55 +24,6 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        // créer tags et tags child
-        $tag1 = new Tag();
-        $tag1->setName('Types de contrats');
-        $tag1->setSlug('types-de-contrats');
-
-        $tag2 = new Tag();
-        $tag2->setName('Types de congés');
-        $tag2->setSlug('types-de-congés');
-
-        $tagChild1 = new TagChild();
-        $tagChild1->setName('Congés payés');
-        $tagChild1->setSlug('conges-payes');
-        $tagChild1->setDescription('lorem ipsum congés payés');
-        $tagChild1->setMaxBalance(2.5);
-        $tagChild1->setMeasureUnit('mois');
-
-        $tagChild2 = new TagChild();
-        $tagChild2->setName('Congés RTT');
-        $tagChild2->setSlug('conges-rtt');
-        $tagChild2->setDescription('lorem ipsum congés rtt');
-        $tagChild2->setMaxBalance(10);
-        $tagChild2->setMeasureUnit('an');
-
-        $tag2->addTagChild($tagChild1);
-        $tag2->addTagChild($tagChild2);
-
-        $tagChild3 = new TagChild();
-        $tagChild3->setName('Contrat à Durée Indeterminée (CDI)');
-        $tagChild3->setSlug('contrat-a-duree-indeterminee');
-        $tagChild3->setDescription('CDI');
-
-        $tagChild3 = new TagChild();
-        $tagChild3->setName('Contrat à Durée Determinée (CDD)');
-        $tagChild3->setSlug('contrat-a-duree-determinee');
-        $tagChild3->setDescription('CDD');
-
-        $tagChild4 = new TagChild();
-        $tagChild4->setName('Contrat en alternance');
-        $tagChild4->setSlug('contrat-en-alternance');
-        $tagChild4->setDescription('En alternance');
-
-        $tag1->addTagChild($tagChild3);
-        $tag1->addTagChild($tagChild4);
-
-        $manager->persist($tagChild1);
-        $manager->persist($tagChild2);
-        $manager->persist($tagChild3);
-        $manager->persist($tagChild4);
-
         // create teams
         $team1 = new Teams();
         $team1->setName('Direction');
@@ -82,9 +33,12 @@ class AppFixtures extends Fixture
         $team2 = new Teams();
         $team2->setName('IT');
         $team2->setSlug('it');
-        // $manager->persist($team2);
 
-        // create admin user
+ 
+        $manager->persist($team1);
+        $manager->persist($team2);
+
+        // // create admin user
         $adminUser = new User();
         $adminUser->setEmail('admin@yopmail.fr');
         $adminUser->setPlainPassword('azerty');
@@ -93,10 +47,55 @@ class AppFixtures extends Fixture
         );
         $adminUser->setDateEntrance(new \DateTime('11 months ago'));
         $adminUser->setRoles(["ROLE_ADMIN"]);
+        $adminUser->setTeams($team1);
         $manager->persist($adminUser);
 
-        // créer 4 users et les intégrer à la teams 2
+        // créer tags et tags child
+        $tag1 = new Tag();
+        $tag1->setName('Types de contrats');
+        $tag1->setSlug('types-de-contrats');
 
+        $tag2 = new Tag();
+        $tag2->setName('Types de congés');
+        $tag2->setSlug('types-de-congés');
+
+        $manager->persist($tag1);
+        $manager->persist($tag2);
+
+        $tagChild1 = new TagChild();
+        $tagChild1->setName('Congés payés');
+        $tagChild1->setSlug('conges-payes');
+        $tagChild1->setDescription('lorem ipsum congés payés');
+        $tagChild1->setMaxBalance(2.5);
+        $tagChild1->setMeasureUnit('mois');
+        $tagChild1->setTag($tag2);
+
+        $tagChild2 = new TagChild();
+        $tagChild2->setName('Congés RTT');
+        $tagChild2->setSlug('conges-rtt');
+        $tagChild2->setDescription('lorem ipsum congés rtt');
+        $tagChild2->setMaxBalance(10);
+        $tagChild2->setMeasureUnit('an');
+        $tagChild2->setTag($tag2);
+
+        $tagChild3 = new TagChild();
+        $tagChild3->setName('Contrat à Durée Determinée (CDD)');
+        $tagChild3->setSlug('contrat-a-duree-determinee');
+        $tagChild3->setDescription('CDD');
+        $tagChild3->setTag($tag1);
+
+        $tagChild4 = new TagChild();
+        $tagChild4->setName('Contrat à Durée Indeterminée (CDI)');
+        $tagChild4->setSlug('contrat-a-duree-indeterminee');
+        $tagChild4->setDescription('CDI');
+        $tagChild4->setTag($tag1);
+
+        $manager->persist($tagChild3);
+        $manager->persist($tagChild4);
+        $manager->persist($tagChild1);
+        $manager->persist($tagChild2);
+
+        // créer 4 users et les intégrer à la teams 2
         for ($i = 0; $i < 4; $i++) {
             $product = new User();
             $product->setEmail('user'.$i.'@yopmail.fr');
@@ -106,9 +105,8 @@ class AppFixtures extends Fixture
                 $this->userPasswordEncoder->encodePassword($product, 'azerty')
             );
             $product->setDateEntrance(new \DateTime('9 months ago'));
+            $product->setTeams($team2);
             $product->addTagItem($tagChild3);
-            $team2->addUser($product);
-            $manager->persist($team2);
             $manager->persist($product);
         }
 
@@ -120,47 +118,55 @@ class AppFixtures extends Fixture
         $teamLeader->setPassword(
             $this->userPasswordEncoder->encodePassword($teamLeader, 'azerty')
         );
-        $team1->addUser($teamLeader);
-        $team1->addUser($adminUser);
-
-        // créer des off requests pour un autre user
-        $userTookRequest = new User();
-        $userTookRequest->setEmail('userAsked@yopmail.fr');
-        $userTookRequest->setPlainPassword('azerty');
-        $userTookRequest->setRoles(["ROLE_USER"]);
-        $userTookRequest->setPassword(
-            $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
-        );
-        $team2->addUser($userTookRequest);
-        $manager->persist($userTookRequest);
-
-        $offRequest1 = new OffRequest();
-        $offRequest1->setDateStart(new \Datetime('Monday next week'));
-        $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
-        $offRequest1->setComments('Evenement familial');
-        $offRequest1->setStatus('pending');
-        $offRequest1->setUser($userTookRequest);
-
-
-        $offRequest2 = new OffRequest();
-        $offRequest2->setDateStart(new \Datetime('Monday last week'));
-        $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
-        $offRequest2->setComments('Evenement familial');
-        $offRequest2->setStatus('accepted');
-        $offRequest2->setUser($userTookRequest);
-
-        $manager->persist($offRequest1);
-        $manager->persist($offRequest2);
-
-
-        // NEXT : create validation template
-
+        $teamLeader->setTeams($team1);
         $manager->persist($teamLeader);
-        $manager->persist($team1);
-        $manager->persist($team2);
 
-        $manager->persist($tag1);
-        $manager->persist($tag2);
+        // // créer des off requests pour un autre user
+        // $userTookRequest = new User();
+        // $userTookRequest->setEmail('userAsked@yopmail.fr');
+        // $userTookRequest->setPlainPassword('azerty');
+        // $userTookRequest->setRoles(["ROLE_USER"]);
+        // $userTookRequest->setPassword(
+        //     $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
+        // );
+        // $team2->addUser($userTookRequest);
+        // $manager->persist($userTookRequest);
+
+        // $offRequest1 = new OffRequest();
+        // $offRequest1->setDateStart(new \Datetime('Monday next week'));
+        // $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
+        // $offRequest1->setComments('Evenement familial');
+        // $offRequest1->setStatus('pending');
+        // $offRequest1->setUser($userTookRequest);
+
+
+        // $offRequest2 = new OffRequest();
+        // $offRequest2->setDateStart(new \Datetime('Monday last week'));
+        // $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
+        // $offRequest2->setComments('Evenement familial');
+        // $offRequest2->setStatus('accepted');
+        // $offRequest2->setUser($userTookRequest);
+
+        // $manager->persist($offRequest1);
+        // $manager->persist($offRequest2);
+
+
+        // // NEXT : create validation template
+
+     
+        // $tagChild3 = new TagChild();
+        // $tagChild3->setName('Contrat à Durée Indeterminée (CDI)');
+        // $tagChild3->setSlug('contrat-a-duree-indeterminee');
+        // $tagChild3->setDescription('CDI');
+
+
+        // $tagChild4 = new TagChild();
+        // $tagChild4->setName('Contrat en alternance');
+        // $tagChild4->setSlug('contrat-en-alternance');
+        // $tagChild4->setDescription('En alternance');
+
+        // $tag1->addTagChild($tagChild3);
+        // $tag1->addTagChild($tagChild4);
 
 
         $manager->flush();
