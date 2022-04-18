@@ -68,6 +68,11 @@ class Teams
      */
     private $users;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ValidationTemplate::class, mappedBy="team", cascade={"persist", "remove"})
+     */
+    private $validationTemplate;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
@@ -128,6 +133,23 @@ class Teams
                 $users->setTeams(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getValidationTemplate(): ?ValidationTemplate
+    {
+        return $this->validationTemplate;
+    }
+
+    public function setValidationTemplate(ValidationTemplate $validationTemplate): self
+    {
+        // set the owning side of the relation if necessary
+        if ($validationTemplate->getTeam() !== $this) {
+            $validationTemplate->setTeam($this);
+        }
+
+        $this->validationTemplate = $validationTemplate;
 
         return $this;
     }

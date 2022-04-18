@@ -48,74 +48,59 @@ class ValidationTemplate
     private $id;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="validationTemplate", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $tags = [];
+    private $team;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $validator2 = [];
+    private $mainValidator;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
-    private $validator1 = [];
-
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private $validator3 = [];
+    private $secondValidator;
     
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTags(): ?array
+    public function getTeam(): ?Teams
     {
-        return $this->tags;
+        return $this->team;
     }
 
-    public function setTags(array $tags): self
+    public function setTeam(Teams $team): self
     {
-        $this->tags = $tags;
+        $this->team = $team;
 
         return $this;
     }
 
-    public function getValidator2(): ?array
+    public function getMainValidator(): ?User
     {
-        return $this->validator2;
+        return $this->mainValidator;
     }
 
-    public function setValidator2(array $validator2): self
+    public function setMainValidator(User $mainValidator): self
     {
-        $this->validator2 = $validator2;
+        $this->mainValidator = $mainValidator;
 
         return $this;
     }
 
-    public function getValidator1(): ?array
+    public function getSecondValidator(): ?User
     {
-        return $this->validator1;
+        return $this->secondValidator;
     }
 
-    public function setValidator1(array $validator1): self
+    public function setSecondValidator(?User $secondValidator): self
     {
-        $this->validator1 = $validator1;
-
-        return $this;
-    }
-
-    public function getValidator3(): ?array
-    {
-        return $this->validator3;
-    }
-
-    public function setValidator3(?array $validator3): self
-    {
-        $this->validator3 = $validator3;
+        $this->secondValidator = $secondValidator;
 
         return $this;
     }

@@ -48,6 +48,9 @@ class AppFixtures extends Fixture
         $adminUser->setDateEntrance(new \DateTime('11 months ago'));
         $adminUser->setRoles(["ROLE_ADMIN"]);
         $adminUser->setTeams($team1);
+        $adminUser->setDaysTaken(9);
+        $adminUser->setDaysEarned(27.5);
+        $adminUser->setDaysLeft(20.5);
         $manager->persist($adminUser);
 
         // créer tags et tags child
@@ -114,6 +117,9 @@ class AppFixtures extends Fixture
             $product->setDateEntrance(new \DateTime('9 months ago'));
             $product->setTeams($team2);
             $product->addTagItem($tagChild3);
+            $product->setDaysTaken(10);
+            $product->setDaysEarned(22.5);
+            $product->setDaysLeft(12.5);
             $manager->persist($product);
         }
 
@@ -158,7 +164,6 @@ class AppFixtures extends Fixture
         $manager->persist($offRequest2);
 
         // NEXT : create validation template
-
         $manager->flush();
     }
 }
