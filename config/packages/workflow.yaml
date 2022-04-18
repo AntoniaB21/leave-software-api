@@ -26,6 +26,6 @@ framework:
                     from: pending
                     to: rejected
                 cancel:
-                    guard: is_granted('ROLE_ADMIN')
+                    # guard: is_granted('ROLE_ADMIN')
                     from: accepted
                     to: rejected

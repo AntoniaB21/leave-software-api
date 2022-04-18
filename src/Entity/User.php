@@ -128,6 +128,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $daysLeft;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notifications::class, mappedBy="user")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->offRequests = new ArrayCollection();
@@ -137,6 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->daysEarned = 0.0;
         $this->daysTaken = 0.0;
         $this->daysLeft = 0.0;
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,6 +354,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDaysLeft(float $daysLeft): self
     {
         $this->daysLeft = $daysLeft;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notifications>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notifications $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notifications $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
 
         return $this;
     }
