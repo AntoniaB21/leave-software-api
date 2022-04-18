@@ -7,6 +7,7 @@ use App\Entity\Teams;
 use App\Entity\Tag;
 use App\Entity\TagChild;
 use App\Entity\OffRequest;
+use App\Entity\ValidationTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -164,6 +165,13 @@ class AppFixtures extends Fixture
         $manager->persist($offRequest2);
 
         // NEXT : create validation template
+        $validationTemplateIt = new ValidationTemplate();
+        $validationTemplateIt->setTeam($team2);
+        $validationTemplateIt->setMainValidator($teamLeader);
+        $validationTemplateIt->setSecondValidator($adminUser);
+
+        $manager->persist($validationTemplateIt);
+
         $manager->flush();
     }
 }
