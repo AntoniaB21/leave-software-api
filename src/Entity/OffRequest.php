@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OffRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\ValidationOffRequestController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,7 +23,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "post"={
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only logged-in users can add off request",
- *          }
+ *          },
+ *          "get"={
+ *               "security"="is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') ",
+ *               "path"="/off_requests/{id}/{to}",
+ *               "controller"=ValidationOffRequestController::class,
+ *               "security_message"="Only admin or manager can validate Off Request",
+ *               "read"=false,
+ *               "defaults"={"_api_receive"=false}
+ *          },
  *      },
  *      itemOperations={
  *          "get"={
@@ -30,9 +39,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "security_message"="Only admin can see tag detail",
  *          },
  *          "put"={
-*               "security"="is_granted('ROLE_ADMIN') or object == user",
+ *               "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only admin can update tag detail",
  *          },
+ *         
  *          "delete"={
  *              "security"="is_granted('ROLE_ADMIN')",
  *              "security_message"="Only admin can delete a tag",

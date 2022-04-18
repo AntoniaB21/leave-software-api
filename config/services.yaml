@@ -20,7 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-
+        
     # _instanceof:
     #     Workflow\Action\ActionTransitionInterface:
     #         tags: ['workflow.action']

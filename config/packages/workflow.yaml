@@ -18,9 +18,11 @@ framework:
                     from: draft
                     to: pending
                 accept:
+                    guard: is_granted('ROLE_MANAGER')
                     from: pending
                     to: accepted
                 reject:
+                    guard: is_granted('ROLE_MANAGER')
                     from: pending
                     to: rejected
 
