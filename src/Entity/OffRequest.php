@@ -77,6 +77,10 @@ class OffRequest
      */
     private $status;
 
+    public function __construct() {
+        $this->status = "draft";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

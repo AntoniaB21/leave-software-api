@@ -90,8 +90,15 @@ class AppFixtures extends Fixture
         $tagChild4->setDescription('CDI');
         $tagChild4->setTag($tag1);
 
+        $tagChild5 = new TagChild();
+        $tagChild5->setName('Contrat en alternance');
+        $tagChild5->setSlug('contrat-en-alternance');
+        $tagChild5->setDescription('En alternance');
+        $tagChild5->setTag($tag1);
+
         $manager->persist($tagChild3);
         $manager->persist($tagChild4);
+        $manager->persist($tagChild5);
         $manager->persist($tagChild1);
         $manager->persist($tagChild2);
 
@@ -121,53 +128,36 @@ class AppFixtures extends Fixture
         $teamLeader->setTeams($team1);
         $manager->persist($teamLeader);
 
-        // // créer des off requests pour un autre user
-        // $userTookRequest = new User();
-        // $userTookRequest->setEmail('userAsked@yopmail.fr');
-        // $userTookRequest->setPlainPassword('azerty');
-        // $userTookRequest->setRoles(["ROLE_USER"]);
-        // $userTookRequest->setPassword(
-        //     $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
-        // );
-        // $team2->addUser($userTookRequest);
-        // $manager->persist($userTookRequest);
+        // créer des off requests pour un autre user
+        $userTookRequest = new User();
+        $userTookRequest->setEmail('userAsked@yopmail.fr');
+        $userTookRequest->setPlainPassword('azerty');
+        $userTookRequest->setRoles(["ROLE_USER"]);
+        $userTookRequest->setPassword(
+            $this->userPasswordEncoder->encodePassword($userTookRequest, 'azerty')
+        );
+        $userTookRequest->setTeams($team2);
+        $manager->persist($userTookRequest);
 
-        // $offRequest1 = new OffRequest();
-        // $offRequest1->setDateStart(new \Datetime('Monday next week'));
-        // $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
-        // $offRequest1->setComments('Evenement familial');
-        // $offRequest1->setStatus('pending');
-        // $offRequest1->setUser($userTookRequest);
+        $offRequest1 = new OffRequest();
+        $offRequest1->setDateStart(new \Datetime('Monday next week'));
+        $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
+        $offRequest1->setComments('Autre evenement familial');
+        $offRequest1->setStatus('pending');
+        $offRequest1->setUser($userTookRequest);
 
+        $manager->persist($offRequest1);
 
-        // $offRequest2 = new OffRequest();
-        // $offRequest2->setDateStart(new \Datetime('Monday last week'));
-        // $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
-        // $offRequest2->setComments('Evenement familial');
-        // $offRequest2->setStatus('accepted');
-        // $offRequest2->setUser($userTookRequest);
+        $offRequest2 = new OffRequest();
+        $offRequest2->setDateStart(new \Datetime('Monday last week'));
+        $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
+        $offRequest2->setComments('Evenement familial');
+        $offRequest2->setStatus('accepted');
+        $offRequest2->setUser($userTookRequest);
 
-        // $manager->persist($offRequest1);
-        // $manager->persist($offRequest2);
+        $manager->persist($offRequest2);
 
-
-        // // NEXT : create validation template
-
-     
-        // $tagChild3 = new TagChild();
-        // $tagChild3->setName('Contrat à Durée Indeterminée (CDI)');
-        // $tagChild3->setSlug('contrat-a-duree-indeterminee');
-        // $tagChild3->setDescription('CDI');
-
-
-        // $tagChild4 = new TagChild();
-        // $tagChild4->setName('Contrat en alternance');
-        // $tagChild4->setSlug('contrat-en-alternance');
-        // $tagChild4->setDescription('En alternance');
-
-        // $tag1->addTagChild($tagChild3);
-        // $tag1->addTagChild($tagChild4);
-
+        // NEXT : create validation template
 
         $manager->flush();
     }
