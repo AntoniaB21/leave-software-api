@@ -20,7 +20,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-        
+    
+    App\Listeners\OnAuthSuccessListener:
+        tags:
+            - { name : kernel.event_listener , event: 'lexik_jwt_authentication.on_authentication_success', method: onAuthenticationSuccess}
     # _instanceof:
     #     Workflow\Action\ActionTransitionInterface:
     #         tags: ['workflow.action']

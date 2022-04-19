@@ -1,2 +1,10 @@
 gesdinet_jwt_refresh_token:
     refresh_token_class: App\Entity\RefreshToken
+    cookie:
+      enabled: true
+      same_site: lax               # default value
+      path: /coukie                      # default value
+      domain: null                 # default value
+      http_only: true              # default value
+      secure: true                 # default value
+      remove_token_from_body: true # default value
