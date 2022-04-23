@@ -8,3 +8,5 @@ gesdinet_jwt_refresh_token:
       http_only: true              # default value
       secure: true                 # default value
       remove_token_from_body: true # default value
+    firewall: main
+    token_parameter_name: refreshToken

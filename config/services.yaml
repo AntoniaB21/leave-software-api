@@ -22,8 +22,10 @@ services:
             - '../src/Tests/'
     
     App\Listeners\OnAuthSuccessListener:
+        arguments: ['%lexik_jwt_authentication.token_ttl%']
         tags:
-            - { name : kernel.event_listener , event: 'lexik_jwt_authentication.on_authentication_success', method: onAuthenticationSuccess}
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess, priority: -2 }
+
     # _instanceof:
     #     Workflow\Action\ActionTransitionInterface:
     #         tags: ['workflow.action']
