@@ -28,18 +28,16 @@ class OnAuthSuccessListener {
     {
         // /** @var JWTAuthenticationSuccessResponse $response */
 
-        // $response = $event->getResponse();
+        $response = $event->getResponse();
         $data = $event->getData();
-        dd($data);
-        // $tokenJWT = $data['token'];
-        // // unset($data['token']);
+        $tokenJWT = $data['token'];
+        // unset($data['token']);
         // // unset($data['refresh_token']);
-        // $event->setData($data);
+        $event->setData($data);
 
-        // $response->headers->setCookie(new Cookie('New', $tokenJWT, (
-        //     new \DateTime())
-        //     ->add(new \DateInterval('PT' . $this->jwtTokenTTL . 'S')), '/', null, $this->cookieSecure));
-        
+        $response->headers->setCookie(new Cookie('New', $tokenJWT, (
+            new \DateTime())
+            ->add(new \DateInterval('PT' . $this->jwtTokenTTL . 'S')), '/', null, $this->cookieSecure));
             
         return $event;
     }
