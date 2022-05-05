@@ -8,6 +8,7 @@ use App\Controller\ValidationOffRequestController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource(attributes={
@@ -50,6 +51,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      }
  * )
+ * @UniqueEntity("dateStart")
+ * @UniqueEntity("dateEnd")
  * @ORM\Entity(repositoryClass=OffRequestRepository::class)
  */
 class OffRequest
@@ -64,7 +67,6 @@ class OffRequest
     /**
      * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @Assert\GreaterThan("today")
-     * @Assert\Unique
      * @ORM\Column(type="datetime")
      */
     private $dateStart;
@@ -72,7 +74,6 @@ class OffRequest
     /**
      * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @Assert\GreaterThan("today")
-     * @Assert\Unique
      * @ORM\Column(type="datetime")
      */
     private $dateEnd;
