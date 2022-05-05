@@ -70,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"users:write"})
+     * @Groups({"users:write","users:read"})
      * 
      */
     private $roles = [];
@@ -202,6 +202,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     * 
      */
     public function getRoles(): array
     {
