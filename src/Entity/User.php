@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Teams;
+use App\Controller\UserController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints\DateTime;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(attributes={
@@ -25,15 +29,23 @@ use Symfony\Component\Validator\Constraints\DateTime;
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can see user list",
  *      },
+ 
  *      "post"={
  *          "security_message"="Only admin can add a user",
  *      }
  * },
  *  itemOperations={
-*       "get"={
-*          "security"="is_granted('ROLE_ADMIN') or object == user",
-*          "security_message"= "You are not the owner of this profile",
-*       }, 
+ *      "get"={
+ *          "security"="is_granted('ROLE_ADMIN') or object == user",
+ *          "security_message"="Only admin or owner can update detail",
+ *      },
+ *      "getByEmail"={
+ *         "method"="GET",
+ *         "security"="is_granted('ROLE_ADMIN') or object == user",
+ *         "security_message"="Only admin or owner can do this",
+ *         "controller"=UserController::class,
+ *         "path"="/users/email/{email}"
+ *      },
  *      "put"={
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *          "security_message"="Only admin or owner can update detail",
@@ -43,6 +55,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  *          "security_message"="Only admin can delete a user",
  *      },
  * })
+ * @ApiFilter(SearchFilter::class, properties={"email"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -52,13 +65,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"users:read", "offRequest:read"})
-     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"users:read", "users:write", "offRequest:read"})
+     * 
      */
     private $email;
 

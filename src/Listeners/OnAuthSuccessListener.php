@@ -7,15 +7,21 @@ use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessRespon
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use App\Repository\UserRepository;
 
 class OnAuthSuccessListener {
     private $jwtTokenTTL;
 
     private $cookieSecure = false;
+    private $entityManager;
+    // private UserRepository $userRepository;
+
 
     public function __construct($ttl)
     {
         $this->jwtTokenTTL = $ttl;
+        // $this->userRepository = $userRepository;
+        
     }
 
     /**
@@ -27,9 +33,10 @@ class OnAuthSuccessListener {
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event)
     {
         // /** @var JWTAuthenticationSuccessResponse $response */
-
         $response = $event->getResponse();
         $data = $event->getData();
+        $user = $event->getUser();
+        $data['xyz'] = $user->getId();
         $tokenJWT = $data['token'];
         // unset($data['token']);
         // // unset($data['refresh_token']);
