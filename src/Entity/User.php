@@ -39,13 +39,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *          "security_message"="Only admin or owner can update detail",
  *      },
- *      "getByEmail"={
- *         "method"="GET",
- *         "security"="is_granted('ROLE_ADMIN') or object == user",
- *         "security_message"="Only admin or owner can do this",
- *         "controller"=UserController::class,
- *         "path"="/users/email/{email}"
- *      },
  *      "put"={
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *          "security_message"="Only admin or owner can update detail",
