@@ -32,7 +32,19 @@ class ValidationOffRequestController extends AbstractController
         $workflow = $this->registry->get($data, 'off_request_validation');
         try {
             if ($to === 'accepted'){
+                $dateDiff = date_diff($data->getDateEnd(), $data->getDateStart());
+                $periodes = new \DatePeriod(
+                    $data->getDateStart(),
+                    new \DateInterval('P1D'),
+                    $data->getDateEnd()->modify("+1 day")
+                );
                 $daysDiff = date_diff($data->getDateEnd(), $data->getDateStart())->days;
+                foreach ($periodes as $periode) {
+                    $dayOfWeek = $periode->format('D');
+                    if ($dayOfWeek === "Sat" || $dayOfWeek === "Sun"){
+                        --$daysDiff;
+                    }
+                }
                 $user = $data->getUser();
                 $user->setDaysTaken($user->getDaysTaken() + $daysDiff);
                 $user->setDaysLeft($user->getDaysEarned() - $user->getDaysTaken());
