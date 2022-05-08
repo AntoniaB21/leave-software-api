@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      },
  *      collectionOperations={
  *          "get"={
- *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security"="is_granted('ROLE_ADMIN') or object.user == user",
  *              "security_message"="Only admin or owner of the request can see offRequests list",
  *           },
  *          "transitionEvent"={
@@ -46,13 +46,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          },
  *         
  *          "delete"={
- *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security"="is_granted('ROLE_ADMIN') or object.user == user",
  *              "security_message"="Only admin can delete a tag",
  *          },
  *      }
  * )
- * @UniqueEntity("dateStart")
- * @UniqueEntity("dateEnd")
  * @ORM\Entity(repositoryClass=OffRequestRepository::class)
  */
 class OffRequest
@@ -74,6 +72,10 @@ class OffRequest
     /**
      * @Groups({"offRequest:read","offRequest:write", "users:read"})
      * @Assert\GreaterThan("today")
+     * @Assert\Expression(
+     *     "this.getDateStart() < this.getDateEnd()",
+     *     message="La date de fin doit être supérieure à la date de début"
+     *  )
      * @ORM\Column(type="datetime")
      */
     private $dateEnd;
@@ -98,14 +100,13 @@ class OffRequest
     private $status;
 
     /**
-     * @Assert\Type("float")
-     * @Groups({"offRequest:read","offRequest:write", "users:read"})
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="datetime")
      */
-    private $count;
+    private $createdAt;
 
     public function __construct() {
         $this->status = "draft";
+        $this->createdAt = new \Datetime('now');
     }
 
     public function getId(): ?int
@@ -173,14 +174,14 @@ class OffRequest
         return $this;
     }
 
-    public function getCount(): ?float
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->count;
+        return $this->createdAt;
     }
 
-    public function setCount(float $count): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->count = $count;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -40,20 +40,18 @@ class WorkflowSubrscriberSubscriber implements EventSubscriberInterface
         // ->text('Votre demande de congés a été '. $event->getSubject()->getStatus());
         // $this->mailer->send($email);
 
-        // // create notification
-        // $notification = new Notifications();
-        // $notification->setMessage('Votre demande de congés a été '. $event->getSubject()->getStatus());
-        // $notification->setUser($event->getSubject()->getUser());
-        // $this->entityManager->persist($notification);
-        // $this->entityManager->flush();
+        // create notification
+        $notification = new Notifications();
+        $notification->setMessage('Votre demande de congés a été '. $event->getSubject()->getStatus());
+        $notification->setUser($event->getSubject()->getUser());
+        $this->entityManager->persist($notification);
+        $this->entityManager->flush();
     }
 
     public function DaysLeftUpdated(Event $event){
         // dd($event->getSubject());
         $offRequest = $event->getSubject();
         $user = $event->getSubject()->getUser();
-        $user->setDaysLeft($user->getDaysLeft() - $offRequest->getCount());
-
         $this->entityManager->persist($user);
         $this->entityManager->persist($offRequest);
         $this->entityManager->flush();

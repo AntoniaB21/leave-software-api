@@ -31,6 +31,12 @@ class ValidationOffRequestController extends AbstractController
     {
         $workflow = $this->registry->get($data, 'off_request_validation');
         try {
+            if ($to === 'accepted'){
+                $daysDiff = date_diff($data->getDateEnd(), $data->getDateStart())->days;
+                $user = $data->getUser();
+                $user->setDaysTaken($user->getDaysTaken() + $daysDiff);
+                $user->setDaysLeft($user->getDaysEarned() - $user->getDaysTaken());
+            }
             $this->offRequestValidationStateMachine->apply($data, $to);
         }catch (LogicException $logicException){
             return $logicException;

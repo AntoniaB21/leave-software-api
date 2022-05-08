@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * @ApiResource(attributes={
@@ -90,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="user")
      * @Groups({"users:read"})
+     * @ApiSubresource()
      * 
      */
     private $offRequests;
@@ -135,6 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $daysLeft;
 
     /**
+     * @ApiSubresource()
      * @ORM\OneToMany(targetEntity=Notifications::class, mappedBy="user")
      */
     private $notifications;

@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Teams;
 use App\Entity\Tag;
 use App\Entity\TagChild;
+use App\Entity\Notifications;
 use App\Entity\OffRequest;
 use App\Entity\ValidationTemplate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -162,7 +163,6 @@ class AppFixtures extends Fixture
         $offRequest1->setDateEnd(new \Datetime('Thursday next week'));
         $offRequest1->setComments('Autre evenement familial');
         $offRequest1->setStatus('pending');
-        $offRequest1->setCount(4);
         $offRequest1->setUser($userTookRequest);
 
         $manager->persist($offRequest1);
@@ -172,11 +172,16 @@ class AppFixtures extends Fixture
         $offRequest2->setDateEnd(new \Datetime('Thursday last week'));
         $offRequest2->setComments('Evenement familial');
         $offRequest2->setStatus('accepted');
-        $offRequest2->setCount(4);
         $offRequest2->setUser($userTookRequest);
 
         $manager->persist($offRequest2);
 
+        // Création des notifications
+        $notification1 = new Notifications();
+        $notification1->setUser($adminUser);
+        $notification1->setMessage('Une notificiation test');
+        $notification1->setCreatedAt(new \Datetime('Monday last week'));
+        
         // NEXT : create validation template
         $validationTemplateIt = new ValidationTemplate();
         $validationTemplateIt->setTeam($team2);
