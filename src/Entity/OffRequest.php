@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OffRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\OffToValidateController;
 use App\Controller\ValidationOffRequestController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,8 +38,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *      },
  *      itemOperations={
  *          "get"={
-*          "security"="is_granted('ROLE_ADMIN') or object == user",
+ *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only admin can see tag detail",
+ *          },
+ *          "offToValidate"={
+ *              "method"="GET",
+ *              "path"="/users/{id}/validation",
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')",
+ *              "security_message"="Only manager or admin can see this list",
+ *              "controller"=OffToValidateController::class
  *          },
  *          "put"={
  *               "security"="is_granted('ROLE_ADMIN') or object == user",

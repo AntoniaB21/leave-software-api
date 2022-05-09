@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Teams;
 use App\Controller\UserController;
+use App\Controller\OffToValidateController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,7 +31,6 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *          "security"="is_granted('ROLE_ADMIN')",
  *          "security_message"="Only admin can see user list",
  *      },
- 
  *      "post"={
  *          "security_message"="Only admin can add a user",
  *      }
@@ -155,6 +155,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $jobTitle;
 
     public function __construct()
     {
@@ -432,6 +437,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    public function setJobTitle(string $jobTitle): self
+    {
+        $this->jobTitle = $jobTitle;
 
         return $this;
     }
