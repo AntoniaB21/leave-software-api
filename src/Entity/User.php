@@ -157,7 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $jobTitle;
 

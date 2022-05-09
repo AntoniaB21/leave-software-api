@@ -55,6 +55,7 @@ class AppFixtures extends Fixture
         $adminUser->setDaysTaken(9);
         $adminUser->setDaysEarned(27.5);
         $adminUser->setDaysLeft(20.5);
+        $adminUser->setJobTitle('Responsable RH');
         $manager->persist($adminUser);
 
         // créer tags et tags child
@@ -126,6 +127,7 @@ class AppFixtures extends Fixture
             $product->setDaysTaken(10);
             $product->setDaysEarned(22.5);
             $product->setDaysLeft(12.5);
+            $product->setJobTitle('Assistant RH');
             $manager->persist($product);
         }
 
@@ -140,6 +142,7 @@ class AppFixtures extends Fixture
             $this->userPasswordEncoder->encodePassword($teamLeader, 'azerty')
         );
         $teamLeader->setTeams($team1);
+        $teamLeader->setJobTitle('CTO');
         $manager->persist($teamLeader);
 
         // créer des off requests pour un autre user
@@ -156,6 +159,7 @@ class AppFixtures extends Fixture
         $userTookRequest->setDaysTaken(2);
         $userTookRequest->setDaysLeft(13);
         $userTookRequest->setDaysEarned(15);
+        $userTookRequest->setJobTitle('Backend developper');
         $manager->persist($userTookRequest);
 
         $offRequest1 = new OffRequest();
