@@ -1,1 +1,1 @@
-web: heroku-php-apache2 public/
+echo 'web: heroku-php-nginx -C nginx_app.conf public/' > Procfile
