@@ -83,7 +83,8 @@ class OffRequestRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->andWhere('o.validator=:userId')
             ->setParameter('userId', $userId)
-            ->leftJoin('o.user','user')
+            ->andWhere('o.status=:pending')
+            ->setParameter('pending', 'pending')
             ->getQuery()
             ->execute()
         ;
