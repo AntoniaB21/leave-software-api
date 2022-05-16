@@ -73,14 +73,14 @@ class OffRequest
     private $id;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write", "users:read"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read","manager:read"})
      * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateStart;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write", "users:read"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read","manager:read"})
      * @Assert\GreaterThan("today")
      * @Assert\Expression(
      *     "this.getDateStart() < this.getDateEnd()",
@@ -91,13 +91,13 @@ class OffRequest
     private $dateEnd;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write", "users:read"})
+     * @Groups({"offRequest:read","offRequest:write", "users:read","manager:read"})
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $comments;
 
     /**
-     * @Groups({"offRequest:read","offRequest:write"})
+     * @Groups({"offRequest:read","offRequest:write","manager:read"})
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offRequests")
      */
     private $user;

@@ -42,7 +42,8 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *          "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')",
  *          "path"="/users/{id}/validationList",
  *          "security_message"="Only admin can see user list",
- *          "controller"=ValidationListController::class
+ *          "controller"=ValidationListController::class,
+ *          "normalization_context"={"groups"={"manager:read"}}
  *      },
  *      "get"={
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
@@ -152,14 +153,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users:read", "users:write", "offRequest:read"})
+     * @Groups({"users:read", "users:write", "offRequest:read","manager:read"})
      * 
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"users:read", "users:write", "offRequest:read"})
+     * @Groups({"users:read", "users:write", "offRequest:read","manager:read"})
      * 
      */
     private $lastName;
