@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Teams;
 use App\Controller\UserController;
 use App\Controller\OffToValidateController;
+use App\Controller\ValidationListController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,6 +37,13 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *      }
  * },
  *  itemOperations={
+ *      "getValidationList"={
+ *          "method"="GET",
+ *          "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')",
+ *          "path"="/users/{id}/validationList",
+ *          "security_message"="Only admin can see user list",
+ *          "controller"=ValidationListController::class
+ *      },
  *      "get"={
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *          "security_message"="Only admin or owner can update detail",
@@ -157,6 +165,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
+     * @Groups({"users:read", "users:write", "offRequest:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $jobTitle;

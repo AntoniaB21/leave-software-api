@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ValidationTemplateRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(attributes={
@@ -25,7 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  *  itemOperations={
  *      "get"={
  *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can see validation template detail",
+ *          "security_message"="Only admin can see valid ation template detail",
  *      },
  *      "put"={
  *          "security"="is_granted('ROLE_ADMIN')",
@@ -50,14 +53,29 @@ class ValidationTemplate
     /**
      * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="validationTemplate", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"validationTemplate:read","validationTemplate:write"})
      */
     private $team;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"validationTemplate:read","validationTemplate:write"})
+     * 
      */
     private $mainValidator;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="validationTemplate")
+     * @Groups({"validationTemplate:read","validationTemplate:write"})
+     * 
+     */
+    private $offsRequests;
+
+    public function __construct()
+    {
+        $this->offsRequests = new ArrayCollection();
+    }
 
     // /**
     //  * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
@@ -104,4 +122,34 @@ class ValidationTemplate
 
     //     return $this;
     // }
+
+    /**
+     * @return Collection<int, OffRequest>
+     */
+    public function getOffsRequests(): Collection
+    {
+        return $this->offsRequests;
+    }
+
+    public function addOffsRequest(OffRequest $offsRequest): self
+    {
+        if (!$this->offsRequests->contains($offsRequest)) {
+            $this->offsRequests[] = $offsRequest;
+            $offsRequest->setValidationTemplate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffsRequest(OffRequest $offsRequest): self
+    {
+        if ($this->offsRequests->removeElement($offsRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($offsRequest->getValidationTemplate() === $this) {
+                $offsRequest->setValidationTemplate(null);
+            }
+        }
+
+        return $this;
+    }
 }

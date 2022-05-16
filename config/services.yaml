@@ -26,6 +26,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccess, priority: -2 }
 
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
     # _instanceof:
     #     Workflow\Action\ActionTransitionInterface:
     #         tags: ['workflow.action']

@@ -62,15 +62,14 @@ class ValidationTemplateRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?ValidationTemplate
+    public function findOneByTeam($team): ?ValidationTemplate
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('v.team = :team')
+            ->setParameter('team', $team)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

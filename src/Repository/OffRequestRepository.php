@@ -73,4 +73,18 @@ class OffRequestRepository extends ServiceEntityRepository
         ;
     }
     */
+
+        
+    /**
+     * @return array
+     */
+    public function getValidationListByManager($userId)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.validator=:userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

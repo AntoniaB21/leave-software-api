@@ -7,16 +7,16 @@ framework:
                 property: 'status'
             supports: 
                 - App\Entity\OffRequest
-            initial_marking: draft
+            initial_marking: pending
             places:
-                - draft
                 - pending
                 - accepted
                 - rejected
+                - cancelled
             transitions:
-                pending:
-                    from: draft
-                    to: pending
+                cancelled:
+                    from: pending
+                    to: cancelled
                 accepted:
                     guard: is_granted('ROLE_MANAGER')
                     from: pending

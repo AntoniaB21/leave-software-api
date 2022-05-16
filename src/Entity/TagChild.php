@@ -52,7 +52,7 @@ class TagChild
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"tagChild:read", "tagChild:write", "tag:read", "users:read"})
+     * @Groups({"tagChild:read", "tagChild:write", "tag:read", "users:read","offRequest:read"})
      * 
      */
     private $name;
@@ -97,9 +97,15 @@ class TagChild
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OffRequest::class, mappedBy="offRequestType")
+     */
+    private $offRequests;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->offRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,6 +207,36 @@ class TagChild
     {
         if ($this->users->removeElement($user)) {
             $user->removeTagItem($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OffRequest>
+     */
+    public function getOffRequests(): Collection
+    {
+        return $this->offRequests;
+    }
+
+    public function addOffRequest(OffRequest $offRequest): self
+    {
+        if (!$this->offRequests->contains($offRequest)) {
+            $this->offRequests[] = $offRequest;
+            $offRequest->setOffRequestType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffRequest(OffRequest $offRequest): self
+    {
+        if ($this->offRequests->removeElement($offRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($offRequest->getOffRequestType() === $this) {
+                $offRequest->setOffRequestType(null);
+            }
         }
 
         return $this;

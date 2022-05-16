@@ -6,6 +6,7 @@ use App\Repository\OffRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Controller\OffToValidateController;
 use App\Controller\ValidationOffRequestController;
+use App\Controller\AddOffRequestController;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,6 +23,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *              "security"="is_granted('ROLE_ADMIN') or object.user == user",
  *              "security_message"="Only admin or owner of the request can see offRequests list",
  *           },
+ *          "offToValidate"={
+ *              "method"="GET",
+ *              "path"="/off_requests/validation",
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')",
+ *              "security_message"="Only manager or admin can see this list",
+ *              "controller"=OffToValidateController::class
+ *          },
  *          "transitionEvent"={
  *               "method"="GET",
  *               "security"="is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') ",
@@ -34,19 +42,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "post"={
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only logged-in users can add off request",
+ *               "controller"=AddOffRequestController::class,
  *          }
  *      },
  *      itemOperations={
  *          "get"={
  *          "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only admin can see tag detail",
- *          },
- *          "offToValidate"={
- *              "method"="GET",
- *              "path"="/users/{id}/validation",
- *              "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')",
- *              "security_message"="Only manager or admin can see this list",
- *              "controller"=OffToValidateController::class
  *          },
  *          "put"={
  *               "security"="is_granted('ROLE_ADMIN') or object == user",
@@ -101,7 +103,7 @@ class OffRequest
     private $user;
 
     /**
-     * @Assert\Choice({"draft", "pending", "accepted","rejected", "users:read"})
+     * @Assert\Choice({"pending", "accepted","rejected"})
      * @Groups({"offRequest:read"})
      * @ORM\Column(type="string", length=20)
      */
@@ -112,8 +114,24 @@ class OffRequest
      */
     private $createdAt;
 
+    /**
+     * @Groups({"offRequest:read", "offRequest:write"})
+     * @ORM\ManyToOne(targetEntity=TagChild::class, inversedBy="offRequests")
+     */
+    private $offRequestType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ValidationTemplate::class, inversedBy="offsRequests")
+     */
+    private $validationTemplate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="validationList")
+     */
+    private $validator;
+
     public function __construct() {
-        $this->status = "draft";
+        $this->status = "pending";
         $this->createdAt = new \Datetime('now');
     }
 
@@ -190,6 +208,42 @@ class OffRequest
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getOffRequestType(): ?TagChild
+    {
+        return $this->offRequestType;
+    }
+
+    public function setOffRequestType(?TagChild $offRequestType): self
+    {
+        $this->offRequestType = $offRequestType;
+
+        return $this;
+    }
+
+    public function getValidationTemplate(): ?ValidationTemplate
+    {
+        return $this->validationTemplate;
+    }
+
+    public function setValidationTemplate(?ValidationTemplate $validationTemplate): self
+    {
+        $this->validationTemplate = $validationTemplate;
+
+        return $this;
+    }
+
+    public function getValidator(): ?User
+    {
+        return $this->validator;
+    }
+
+    public function setValidator(?User $validator): self
+    {
+        $this->validator = $validator;
 
         return $this;
     }
